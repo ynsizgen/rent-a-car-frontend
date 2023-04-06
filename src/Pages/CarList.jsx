@@ -1,44 +1,104 @@
-import React from 'react'
-import { useState , useEffect} from 'react';
-import Table from 'react-bootstrap/Table';
-import ProductService from '../services/productService';
-export default function CarList() {
+import React from "react";
+import { useState, useEffect } from "react";
+import ProductService from "../services/productService";
+import {
+    MDBBadge,
+    MDBBtn,
+    MDBTable,
+    MDBTableHead,
+    MDBTableBody,
+    MDBPagination,
+    MDBPaginationItem,
+    MDBPaginationLink,
+} from "mdb-react-ui-kit";
 
-    const [cars, setCars] = useState([])
+export default function CarList() {
+    const [cars, setCars] = useState([]);
 
     useEffect(() => {
-        let productService = new ProductService()
-        productService.getProduct().then(result => setCars(result.data))
-    })
-    
+        let productService = new ProductService();
+        productService.getProduct().then((result) => setCars(result.data));
+    }, []);
 
     return (
         <div>
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>Araba Markası</th>
-                        <th>Araba Modeli</th>
-                        <th>Türü</th>
-                        <th>Fiyatı</th>
-                        <th>Manuel / Auto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        cars?.map(cars => (
-                            <tr key ={cars.id}>
-                                <td>{cars.brandName}</td>
-                                <td>{cars.modelName}</td>
-                                <td>{cars.enumVehicleType}</td>
-                                <td>{cars.dailyPrice}</td>
-                                <td>{cars.manuelAuto}</td>
+            <nav aria-label="table">
+                <MDBTable align="middle">
+                    <MDBTableHead>
+                        <tr>
+                            <th scope="col">Araç</th>
+                            <th scope="col">Araba Modeli</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">Fiyatı</th>
+                            <th scope="col">Manuel/Auto</th>
+                            <th scope="col">Plaka</th>
+                        </tr>
+                    </MDBTableHead>
+                    <MDBTableBody>
+                        {cars?.map((cars) => (
+                            <tr key={cars.id}>
+                                <td>
+                                    <div className="d-flex justify-content-center">
+                                        <div className="ms-3">
+                                            <p className="fw-bold mb-1">{cars.brandName}</p>
+                                            <p className="text-muted mb-0">{cars.modelName}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p className="fw-normal mb-1">{cars.enumVehicleType}</p>
+                                    <p className="text-muted mb-0"></p>
+                                </td>
+                                <td>
+                                    <MDBBadge color="success" pill>
+                                        {cars.state}
+                                    </MDBBadge>
+                                </td>
+                                <td>
+                                    <div className="fw-bold mb-1">
+                                        {cars.dailyPrice} ₺
+                                    </div>
+                                </td>
+                                <td>
+                                    <MDBBadge color="info" pill>
+                                        {String(cars.manuelAuto)}
+                                    </MDBBadge>
+                                </td>
+                                <td>
+                                    <p className="fw-normal mb-1">{cars.plates}</p>
+                                </td>
+                                <td>
+                                    <MDBBtn color="link" rounded size="sm">
+                                        Durum
+                                    </MDBBtn>
+                                </td>
                             </tr>
-                        ))
-                    }
+                        ))}
+                    </MDBTableBody>
+                </MDBTable>
 
-                </tbody>
-            </Table>
+                <MDBPagination className="justify-content-center">
+                    <MDBPaginationItem>
+                        <MDBPaginationLink href="#" aria-label="Previous">
+                            <span aria-hidden="true">«</span>
+                        </MDBPaginationLink>
+                    </MDBPaginationItem>
+                    <MDBPaginationItem>
+                        <MDBPaginationLink href="#">1</MDBPaginationLink>
+                    </MDBPaginationItem>
+                    <MDBPaginationItem>
+                        <MDBPaginationLink href="#">2</MDBPaginationLink>
+                    </MDBPaginationItem>
+                    <MDBPaginationItem>
+                        <MDBPaginationLink href="#">3</MDBPaginationLink>
+                    </MDBPaginationItem>
+                    <MDBPaginationItem>
+                        <MDBPaginationLink href="#" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                        </MDBPaginationLink>
+                    </MDBPaginationItem>
+                </MDBPagination>
+            </nav>
         </div>
-    )
+    );
 }
