@@ -8,9 +8,9 @@ export default function Categories() {
             <Navbar className="navbar-categories" bg="light" expand="lg">
                 <Nav fill variant="tabs" defaultActiveKey="/home">
                     <Nav.Item>
-                        <Nav.Link href="/home">Kiralık Araba</Nav.Link>
-                        <Nav.Link eventKey="link-1">Ekonomik Kiralık Araba</Nav.Link>
-                        <Nav.Link eventKey="link-2">Konfor Kiralık Araba</Nav.Link>
+                        <Nav.Link href="/cars">Kiralık Araba</Nav.Link>
+                        <Nav.Link href="/economyCars">Ekonomik Kiralık Araba</Nav.Link>
+                        <Nav.Link href="/confortCars">Konfor Kiralık Araba</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link eventKey="disabled" disabled>

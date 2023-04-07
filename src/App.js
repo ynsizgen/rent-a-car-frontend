@@ -8,12 +8,12 @@ import Navi from './Layouts/Navi';
 function App() {
   return (
     <div className="App">
+      
       <Navi/>
       <Container>
         <Dashboard/>
-        </Container>
-        
-      
+      </Container>
+
     </div>
   );
 }

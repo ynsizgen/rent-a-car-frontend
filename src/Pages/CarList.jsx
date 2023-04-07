@@ -17,7 +17,7 @@ export default function CarList() {
 
     useEffect(() => {
         let productService = new ProductService();
-        productService.getProduct().then((result) => setCars(result.data));
+        productService.getCars().then((result) => setCars(result.data));
     }, []);
 
     return (
