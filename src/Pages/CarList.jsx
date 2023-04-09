@@ -11,6 +11,7 @@ import {
     MDBPaginationItem,
     MDBPaginationLink,
 } from "mdb-react-ui-kit";
+import { Link } from "react-router-dom";
 
 export default function CarList() {
     const [cars, setCars] = useState([]);
@@ -69,7 +70,7 @@ export default function CarList() {
                                 </td>
                                 <td>
                                     <MDBBtn color="link" rounded size="sm">
-                                        Durum
+                                        <Link to={`/cars/${cars.id}`} >Durum</Link> 
                                     </MDBBtn>
                                 </td>
                             </tr>

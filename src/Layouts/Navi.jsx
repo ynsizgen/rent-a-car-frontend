@@ -13,52 +13,57 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBCollapse,
-} from 'mdb-react-ui-kit';
+} from "mdb-react-ui-kit";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 
 export default function Navi() {
   const [showBasic, setShowBasic] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   function handleSignOut() {
-      setIsAuthenticated(false)  
+    setIsAuthenticated(false);
+    navigate("/");
   }
   function handSighIn() {
-      setIsAuthenticated(true)
+    setIsAuthenticated(true);
   }
-
+  function handleGoToUserDetail() {
+    navigate("/userDetail");
+  }
   return (
     <div>
-
-      <MDBNavbar expand='lg' light style={{ backgroundColor: '#e3f2fd' }}>
-
-        <MDBContainer  >
-          <MDBNavbarBrand href='#'>Brand</MDBNavbarBrand>
-
+      <MDBNavbar expand="lg" light style={{ backgroundColor: "#e3f2fd" }}>
+        <MDBContainer>
+          <Nav.Link as={NavLink} to={"/"}>
+            <MDBNavbarBrand href="#">RENT A CAR</MDBNavbarBrand>
+          </Nav.Link>
           <MDBNavbarToggler
-            aria-controls='navbarSupportedContent'
-            aria-expanded='false'
-            aria-label='Toggle navigation'
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
             onClick={() => setShowBasic(!showBasic)}
           >
-            <MDBIcon icon='bars' fas />
+            <MDBIcon icon="bars" fas />
           </MDBNavbarToggler>
 
           <MDBCollapse navbar show={showBasic}>
-            <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+            <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
               <MDBNavbarItem>
-                <MDBNavbarLink active aria-current='page' href='#'>
+                <MDBNavbarLink active aria-current="page" href="#">
                   Home
                 </MDBNavbarLink>
               </MDBNavbarItem>
               <MDBNavbarItem>
-                <MDBNavbarLink href='#'>Link</MDBNavbarLink>
+                <MDBNavbarLink href="#">Link</MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>
                 <MDBDropdown>
-                  <MDBDropdownToggle tag='a' className='nav-link' role='button'>
+                  <MDBDropdownToggle tag="a" className="nav-link" role="button">
                     Dropdown
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
@@ -70,22 +75,24 @@ export default function Navi() {
               </MDBNavbarItem>
 
               <MDBNavbarItem>
-                <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
+                <MDBNavbarLink
+                  disabled
+                  href="#"
+                  tabIndex={-1}
+                  aria-disabled="true"
+                >
                   Disabled
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
-
           </MDBCollapse>
-          {
-            isAuthenticated?<SignedIn signOut={handleSignOut}/>: <SignedOut signIn={handSighIn}/>
-          }
-          
-          
-
+          {isAuthenticated ? (
+            <SignedIn signOut={handleSignOut} goToBilgiler={handleGoToUserDetail}/>
+          ) : (
+            <SignedOut signIn={handSighIn} />
+          )}
         </MDBContainer>
       </MDBNavbar>
-
     </div>
   );
 }
