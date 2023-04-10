@@ -69,9 +69,9 @@ export default function ConfortCarsList() {
                   </td>
                   <td>
                     <MDBBtn color="link" rounded size="sm">
-                    <Link to={`/confCars/${confCars.id}`} >Durum</Link> 
+                    <Link to={`/cars/${confCars.id}`} >Durum</Link> 
                     </MDBBtn>
-                  </td>
+                  </td> 
                 </tr>
               ))}
           </MDBTableBody>

@@ -30,8 +30,6 @@ export default function Dashboard() {
             <Route path='/confortCars' Component={ConfortCarsList}></Route>
             <Route path='/economyCars' Component={EconomyCarsList}></Route>
             <Route path='/cars/:id' Component={CarDetail}></Route>
-            <Route path='/confCars/:id' Component={CarDetail}></Route>
-            <Route path='/ecoCars/:id' Component={CarDetail}></Route>
             <Route path='/userDetail' Component={UserDetail}></Route>
           </Routes> 
         </MDBCol>

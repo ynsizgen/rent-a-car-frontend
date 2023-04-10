@@ -72,7 +72,7 @@ export default function EconomyCarsList() {
                             </td>
                             <td>
                                 <MDBBtn color="link" rounded size="sm">
-                                <Link to={`/ecoCars/${ecoCars.id}`} >Durum</Link> 
+                                <Link to={`/cars/${ecoCars.id}`} >Durum</Link> 
                                 </MDBBtn>
                             </td>
                         </tr>
