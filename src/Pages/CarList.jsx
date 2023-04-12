@@ -69,9 +69,11 @@ export default function CarList() {
                                     <p className="fw-normal mb-1">{cars.plates}</p>
                                 </td>
                                 <td>
-                                    <MDBBtn color="link" rounded size="sm">
-                                        <Link to={`/cars/${cars.id}`} >Durum</Link> 
-                                    </MDBBtn>
+                                    <Link to={`/cars/${cars.id}`}>
+                                        <MDBBtn color="link" rounded size="sm">
+                                            Durum
+                                        </MDBBtn>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

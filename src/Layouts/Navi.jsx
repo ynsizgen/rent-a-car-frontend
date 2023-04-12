@@ -16,8 +16,8 @@ import {
 } from "mdb-react-ui-kit";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import {useNavigate } from "react-router-dom";
+
 
 export default function Navi() {
   const [showBasic, setShowBasic] = useState(false);
@@ -38,9 +38,7 @@ export default function Navi() {
     <div>
       <MDBNavbar expand="lg" light style={{ backgroundColor: "#e3f2fd" }}>
         <MDBContainer>
-          <Nav.Link as={NavLink} to={"/"}>
             <MDBNavbarBrand href="#">RENT A CAR</MDBNavbarBrand>
-          </Nav.Link>
           <MDBNavbarToggler
             aria-controls="navbarSupportedContent"
             aria-expanded="false"

@@ -12,7 +12,6 @@ import {
     MDBCheckbox
   }
   from 'mdb-react-ui-kit';
-import { NavLink } from 'react-bootstrap';
   
 export default function Login() {
     const [justifyActive, setJustifyActive] = useState('tab1');

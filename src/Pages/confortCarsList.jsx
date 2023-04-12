@@ -68,10 +68,12 @@ export default function ConfortCarsList() {
                     <p className="fw-normal mb-1">{confCars.plates}</p>
                   </td>
                   <td>
-                    <MDBBtn color="link" rounded size="sm">
-                    <Link to={`/cars/${confCars.id}`} >Durum</Link> 
-                    </MDBBtn>
-                  </td> 
+                    <Link to={`/cars/${confCars.id}`}>
+                      <MDBBtn color="link" rounded size="sm">
+                        Durum
+                      </MDBBtn>
+                    </Link>
+                  </td>
                 </tr>
               ))}
           </MDBTableBody>

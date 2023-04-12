@@ -71,9 +71,11 @@ export default function EconomyCarsList() {
                             <p className="fw-normal mb-1">{ecoCars.plates}</p>
                             </td>
                             <td>
-                                <MDBBtn color="link" rounded size="sm">
-                                <Link to={`/cars/${ecoCars.id}`} >Durum</Link> 
-                                </MDBBtn>
+                            <Link to={`/cars/${ecoCars.id}`}>
+                                        <MDBBtn color="link" rounded size="sm">
+                                            Durum
+                                        </MDBBtn>
+                                    </Link>
                             </td>
                         </tr>
                     ))}

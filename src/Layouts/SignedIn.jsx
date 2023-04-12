@@ -6,8 +6,7 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
 } from "mdbreact";
-import Nav from "react-bootstrap/Nav";
-import { NavLink } from "react-router-dom";
+
 export default function SignedIn({ signOut , goToBilgiler}) {
   return (
     <div>
