@@ -22,7 +22,7 @@ export default function ConfortCarsList() {
   }, []);
 
   return (
-    <div>
+    <div className="mt-4">
       <nav aria-label="table">
         <MDBTable align="middle">
           <MDBTableHead>
@@ -70,7 +70,7 @@ export default function ConfortCarsList() {
                   <td>
                     <Link to={`/cars/${confCars.id}`}>
                       <MDBBtn color="link" rounded size="sm">
-                        Durum
+                        Detay
                       </MDBBtn>
                     </Link>
                   </td>

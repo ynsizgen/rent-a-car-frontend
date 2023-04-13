@@ -28,8 +28,9 @@ export default function Navi() {
     setIsAuthenticated(false);
     navigate("/");
   }
-  function handSighIn() {
+  function handSignIn() {
     setIsAuthenticated(true);
+    navigate("/cars");
   }
   function handleGoToUserDetail() {
     navigate("/userDetail");
@@ -87,7 +88,7 @@ export default function Navi() {
           {isAuthenticated ? (
             <SignedIn signOut={handleSignOut} goToBilgiler={handleGoToUserDetail}/>
           ) : (
-            <SignedOut signIn={handSighIn} />
+            <SignedOut signIn={handSignIn} />
           )}
         </MDBContainer>
       </MDBNavbar>
