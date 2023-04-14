@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { MDBInput, MDBBtn,MDBContainer } from "mdb-react-ui-kit";
+import { MDBInput, MDBBtn, MDBContainer } from "mdb-react-ui-kit";
 
 const validationSchema = Yup.object().shape({
     createBrandRequest: Yup.object().shape({
@@ -43,91 +43,99 @@ const RentalForm = () => {
     return (
         <div className="mt-4">
             <MDBContainer>
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-        >
-            {({ errors, touched }) => (
-                <Form>
-                    <Field
-                        as={MDBInput}
-                        label="Brand name"
-                        name="createBrandRequest.name"
-                        type="text"
-                        invalid={errors.createBrandRequest?.name && touched.createBrandRequest?.name}
-                        feedback={errors.createBrandRequest?.name}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="Model name"
-                        name="createModelRequest.name"
-                        type="text"
-                        invalid={errors.createModelRequest?.name && touched.createModelRequest?.name}
-                        feedback={errors.createModelRequest?.name}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="Daily price"
-                        name="dailyPrice"
-                        type="number"
-                        invalid={errors.dailyPrice && touched.dailyPrice}
-                        feedback={errors.dailyPrice}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="Vehicle type"
-                        name="enumVehicleType"
-                        type="text"
-                        invalid={errors.enumVehicleType && touched.enumVehicleType}
-                        feedback={errors.enumVehicleType}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="Manual or Automatic"
-                        name="manuelAuto"
-                        type="checkbox"
-                        invalid={errors.manuelAuto && touched.manuelAuto}
-                        feedback={errors.manuelAuto}
-                    />
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {({ errors, touched }) => (
+                        <Form>
+                            <Field
+                                as={MDBInput}
+                                label="Marka"
+                                name="createBrandRequest.name"
+                                type="text"
+                                invalid={errors.createBrandRequest?.name && touched.createBrandRequest?.name}
+                                feedback={errors.createBrandRequest?.name}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Model"
+                                name="createModelRequest.name"
+                                type="text"
+                                invalid={errors.createModelRequest?.name && touched.createModelRequest?.name}
+                                feedback={errors.createModelRequest?.name}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Günlük Ücret"
+                                name="dailyPrice"
+                                type="number"
+                                invalid={errors.dailyPrice && touched.dailyPrice}
+                                feedback={errors.dailyPrice}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Vehicle type"
+                                name="enumVehicleType"
+                                type="text"
+                                invalid={errors.enumVehicleType && touched.enumVehicleType}
+                                feedback={errors.enumVehicleType}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Manual or Automatic"
+                                name="manuelAuto"
+                                type="checkbox"
+                                invalid={errors.manuelAuto && touched.manuelAuto}
+                                feedback={errors.manuelAuto}
+                            />
 
-                    <Field
-                        as={MDBInput}
-                        label="Model year"
-                        name="modelYear"
-                        type="number"
-                        invalid={errors.modelYear && touched.modelYear}
-                        feedback={errors.modelYear}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="Plates"
-                        name="plates"
-                        type="text"
-                        invalid={errors.plates && touched.plates}
-                        feedback={errors.plates}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="Number of seats"
-                        name="seats"
-                        type="number"
-                        invalid={errors.seats && touched.seats}
-                        feedback={errors.seats}
-                    />
-                    <Field
-                        as={MDBInput}
-                        label="State"
-                        name="state"
-                        type="text"
-                        invalid={errors.state && touched.state}
-                        feedback={errors.state}
-                    />
-                    <MDBBtn type="submit">Submit</MDBBtn>
-                </Form>
-            )}
-        </Formik>
-        </MDBContainer>
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Model year"
+                                name="modelYear"
+                                type="number"
+                                invalid={errors.modelYear && touched.modelYear}
+                                feedback={errors.modelYear}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Plates"
+                                name="plates"
+                                type="text"
+                                invalid={errors.plates && touched.plates}
+                                feedback={errors.plates}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="Number of seats"
+                                name="seats"
+                                type="number"
+                                invalid={errors.seats && touched.seats}
+                                feedback={errors.seats}
+                            />
+                            <Field
+                                className="mt-4"
+                                as={MDBInput}
+                                label="State"
+                                name="state"
+                                type="text"
+                                invalid={errors.state && touched.state}
+                                feedback={errors.state}
+                            />
+                            <MDBBtn className="mt-4" type="submit">Submit</MDBBtn>
+                        </Form>
+                    )}
+                </Formik>
+            </MDBContainer>
         </div>
     );
 };
