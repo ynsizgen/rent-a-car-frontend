@@ -18,7 +18,9 @@ export default function ConfortCarsList() {
 
   useEffect(() => {
     let productService = new ProductService();
-    productService.getCars().then((result) => setConfCars(result.data));
+    productService.getCars()
+      .then((result) => setConfCars(result.data))
+      .catch((error) => console.error(error));
   }, []);
 
   return (

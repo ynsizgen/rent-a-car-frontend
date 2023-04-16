@@ -18,8 +18,10 @@ export default function CarList() {
 
     useEffect(() => {
         let productService = new ProductService();
-        productService.getCars().then((result) => setCars(result.data));
-    }, []);
+        productService.getCars()
+          .then((result) => setCars(result.data))
+          .catch((error) => console.error(error));
+      }, []);
 
     return (
         <div className="mt-4">

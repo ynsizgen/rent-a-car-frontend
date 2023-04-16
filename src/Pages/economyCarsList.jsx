@@ -20,8 +20,11 @@ export default function EconomyCarsList() {
 
     useEffect(() => {
         let productService = new ProductService();
-        productService.getCars().then((result) => setEcoCars(result.data))
-    }, [])
+        productService.getCars()
+          .then((result) => setEcoCars(result.data))
+          .catch((error) => console.error(error));
+      }, []);
+      
 
     return (
         <div className="mt-4">
@@ -38,7 +41,7 @@ export default function EconomyCarsList() {
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                        {ecoCars?.filter(car => car.dailyPrice < 300).map((ecoCars) => (
+                        {ecoCars?.filter(car => car.dailyPrice < 1300).map((ecoCars) => (
                             <tr key={ecoCars.id}>
                                 <td>
                                     <div className="d-flex justify-content-center">

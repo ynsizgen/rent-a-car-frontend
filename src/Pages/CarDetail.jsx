@@ -22,7 +22,7 @@ export default function CarDetail() {
 
   
   return (
-    <div>
+    <div className='mt-4'>
       <MDBCard>
         <MDBCardHeader>{car.plates}       <MDBBadge color="success" pill>
           {car.state}
