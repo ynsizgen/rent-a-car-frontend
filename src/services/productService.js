@@ -22,6 +22,15 @@ export default class ProductService{
             console.error(error);
         }
     }
+    
+    postCarData(data){
+        try {
+            const response = axios.post("http://localhost:8080/api/cars/addCar",data);
+            return response;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
    
 }
