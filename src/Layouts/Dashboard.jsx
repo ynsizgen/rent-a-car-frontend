@@ -19,7 +19,7 @@ export default function Dashboard() {
     <div>
       <MDBRow className='mb-6'>
         <MDBCol size='3' lg='2'>
-          {location.pathname !== '/car/add' && location.pathname !== '/' && <Categories/>}
+          { location.pathname !== '/' && <Categories/>}
         </MDBCol>
         <MDBCol size='6' lg='9'>
           <Routes>

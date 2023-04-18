@@ -37,6 +37,7 @@ export default function Navi() {
     navigate("/userDetail");
   }
   function handleGoToCarAdd(){
+    setIsAuthenticated(true);
     navigate("/car/add")
   }
   return (

@@ -41,7 +41,7 @@ export default function CarAdd() {
     }
 
 
-    const handleSubmit = async (data,e) => {
+    const handleSubmit = async (data) => {
         
         try {
             const productService = new ProductService();
