@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:8080/api/cars';
+
 export default class ProductService{
 
     
@@ -23,13 +23,10 @@ export default class ProductService{
         }
     }
     
-    postCarData(data){
-        try {
-            const response = axios.post("http://localhost:8080/api/cars/addCar",data);
-            return response;
-        } catch (error) {
-            console.error(error);
-        }
+    async postCarData(data){
+        const response = await axios.post('http://localhost:8080/api/cars/addCar', data)
+        return response;
+    
     }
 
    

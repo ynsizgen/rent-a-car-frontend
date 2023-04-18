@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import IzgenTextInput from "../utilities/customFormControls/IzgenTextInput";
 import ProductService from "../services/productService";
-//import "bootstrap/dist/css/bootstrap.min.css";
-//import "@fortawesome/fontawesome-free/css/all.min.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CarAdd() {
     const CarSchema = Yup.object().shape({
-        brandName: Yup.string().required("Marka adı zorunlu"),
+        brandName: Yup.string().required("Marka adı girilmedi."),
         dailyPrice: Yup.number()
             .typeError("Günlük fiyat sayı olmalı")
-            .required("Günlük fiyat zorunlu"),
-        enumVehicleType: Yup.string().required("Araç tipi zorunlu"),
-        manuelAuto: Yup.boolean().required("Vites tipi zorunlu"),
-        modelName: Yup.string().required("Model adı zorunlu"),
+            .required("Günlük fiyat girilmedi.")
+            .min(300,"Günlük fiyat tutarı 300'den küçük olamaz!"),
+        enumVehicleType: Yup.string().required("Araç tipi girilmedi."),
+        manuelAuto: Yup.boolean().required("Vites tipi girilmedi."),
+        modelName: Yup.string().required("Model adı girilmedi."),
         modelYear: Yup.number()
-            .typeError("Model yılı sayı olmalı")
-            .required("Model yılı zorunlu")
-            .min("1950"),
-        plates: Yup.string().required("Plaka zorunlu"),
+            .typeError("Model yılı sayı girilmeli.")
+            .required("Model yılı girilmedi.")
+            .max(new Date().getFullYear()+1,"Araç gelecekten gelmiş olamaz.")
+            .min("1980","Model yılı 1980'den önce olamaz."),
+        plates: Yup.string().required("Plaka girilmedi."),
         seats: Yup.number()
             .typeError("Koltuk sayısı sayı olmalı")
-            .required("Koltuk sayısı zorunlu"),
-        state: Yup.string().required("Durum zorunlu"),
+            .required("Koltuk sayısı girilmedi."),
+        state: Yup.string().required("Durum girilmedi."),
     });
 
     const initialValues = {
@@ -39,38 +41,37 @@ export default function CarAdd() {
     }
 
 
-
-
-
-    const handleSubmit = async (values, { setSubmitting }) => {
+    const handleSubmit = async (data,e) => {
+        
         try {
-          const response = await fetch("http://localhost:8080/api/cars/addCar", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values),
-          });
-          if (!response.ok) {
-            throw new Error("Failed to save car.");
-          }
-          console.log("Car saved successfully.");
+            const productService = new ProductService();
+            await productService.postCarData(data);
+            toast.success('Araç eklenmiştir.');
         } catch (error) {
-          console.error(error);
-        } finally {
-          setSubmitting(false);
+            if(error.response.data.message === 'Plate already exists.!')
+                toast.error('Plaka başka bir araçta kullanılmış!');
+            else
+                toast.error('Beklenmedik bir hata meydana geldi.');
         }
-      };
+    };
+
 
     return (
+
         <Formik
             initialValues={initialValues}
             validationSchema={CarSchema}
             onSubmit={handleSubmit}
         >
-            {({isSubmitting, values, errors, touched, handleChange, handleSubmit }) => (
+            {({ values, errors, touched, handleChange, handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="brandName">Marka:</label>
                         <IzgenTextInput type="text" name="brandName" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="modelName">Model:</label>
+                        <IzgenTextInput type="text" name="modelName" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="dailyPrice">Günlük Fiyat:</label>
@@ -98,6 +99,40 @@ export default function CarAdd() {
                         </Field>
                         {touched.enumVehicleType && errors.enumVehicleType && (
                             <div className="invalid-feedback">{errors.enumVehicleType}</div>
+                        )}
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="modelYear">Model Yılı:</label>
+                        <IzgenTextInput type="number" name="modelYear" />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="plates">Plaka:</label>
+                        <IzgenTextInput type="text" name="plates" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="seats">Koltuk Sayısı:</label>
+                        <IzgenTextInput type="number" name="seats" />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="state">Durum:</label>
+                        <Field
+                            as="select"
+                            name="state"
+                            value={values.state}
+                            onChange={handleChange}
+                            className={`form-control ${touched.state && errors.state ? "is-invalid" : ""
+                                }`}
+                        >
+                            <option value="">Durum Seçiniz</option>
+                            <option value="AVAILABLE">Müsait</option>
+                            <option value="RENTED">Kiralandı</option>
+                            <option value="MAINTENANCE">Bakımda</option>
+                        </Field>
+                        {touched.state && errors.state && (
+                            <div className="invalid-feedback">{errors.state}</div>
                         )}
                     </div>
                     <div className="form-group">
@@ -134,48 +169,15 @@ export default function CarAdd() {
                             <div className="invalid-feedback">{errors.manuelAuto}</div>
                         )}
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="modelName">Model:</label>
-                        <IzgenTextInput type="text" name="modelName" />
-                    </div>
-               
-                    <div className="form-group">
-                        <label htmlFor="plates">Plaka:</label>
-                        <IzgenTextInput type="text" name="plates" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="seats">Koltuk Sayısı:</label>
-                        <IzgenTextInput type="number" name="seats" />
-                    </div>
-        
-                    <div className="form-group">
-                        <label htmlFor="state">Durum:</label>
-                        <Field
-                            as="select"
-                            name="state"
-                            value={values.state}
-                            onChange={handleChange}
-                            className={`form-control ${touched.state && errors.state ? "is-invalid" : ""
-                                }`}
-                        >
-                            <option value="">Durum Seçiniz</option>
-                            <option value="AVAILABLE">Müsait</option>
-                            <option value="RENTED">Kiralandı</option>
-                            <option value="MAINTENANCE">Bakımda</option>
-                        </Field>
-                        {touched.state && errors.state && (
-                            <div className="invalid-feedback">{errors.state}</div>
-                        )}
-                    </div>           
 
                     <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={isSubmitting}
+                        onSubmit={handleSubmit}
                     >
-                        
-                        {isSubmitting ? 'Araç Ekleniyor...' : 'Araç Ekle'}
+                    Ekle
                     </button>
+                    <ToastContainer />                       
                 </Form>
             )}
         </Formik>

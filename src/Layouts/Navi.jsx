@@ -13,10 +13,11 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBCollapse,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Navi() {
@@ -34,6 +35,9 @@ export default function Navi() {
   }
   function handleGoToUserDetail() {
     navigate("/userDetail");
+  }
+  function handleGoToCarAdd(){
+    navigate("/car/add")
   }
   return (
     <div>
@@ -85,6 +89,15 @@ export default function Navi() {
               </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>
+          
+          {isAuthenticated ? ( 
+              <MDBBtn onClick={handleGoToCarAdd} color="success" >
+                ARAÇ EKLE
+              </MDBBtn>    
+          ) : (
+            null
+          )}
+        
           {isAuthenticated ? (
             <SignedIn signOut={handleSignOut} goToBilgiler={handleGoToUserDetail}/>
           ) : (
