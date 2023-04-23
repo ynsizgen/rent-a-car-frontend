@@ -2,9 +2,10 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import IzgenTextInput from "../utilities/customFormControls/IzgenTextInput";
-import ProductService from "../services/productService";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from "react-redux";
+import {addCar} from "../react/features/car/postSlice";
 
 export default function CarAdd() {
     const CarSchema = Yup.object().shape({
@@ -14,47 +15,48 @@ export default function CarAdd() {
             .required("Günlük fiyat girilmedi.")
             .min(300,"Günlük fiyat tutarı 300'den küçük olamaz!"),
         enumVehicleType: Yup.string().required("Araç tipi girilmedi."),
-        manuelAuto: Yup.boolean().required("Vites tipi girilmedi."),
+        manuelAuto: Yup.boolean().oneOf([true,false], "Vites tipi seçilmeli").required("Vites tipi girilmedi."),
         modelName: Yup.string().required("Model adı girilmedi."),
         modelYear: Yup.number()
             .typeError("Model yılı sayı girilmeli.")
             .required("Model yılı girilmedi.")
             .max(new Date().getFullYear()+1,"Araç gelecekten gelmiş olamaz.")
-            .min("1980","Model yılı 1980'den önce olamaz."),
+            .min(1980,"Model yılı 1980'den önce olamaz."),
         plates: Yup.string().required("Plaka girilmedi."),
         seats: Yup.number()
             .typeError("Koltuk sayısı sayı olmalı")
-            .required("Koltuk sayısı girilmedi."),
+            .required("Koltuk sayısı girilmedi.")
+            .max(20,"Koltuk sayısı 20'den fazla olamaz!"),
         state: Yup.string().required("Durum girilmedi."),
     });
 
+    
     const initialValues = {
-        brandName: "",
-        dailyPrice: "",
-        enumVehicleType: "",
-        manuelAuto: "",
-        modelName: "",
-        modelYear: "",
-        plates: "",
-        seats: "",
-        state: "",
-    }
+        brandName: "nissan",
+        dailyPrice: 2000.22,
+        enumVehicleType: 1,
+        manuelAuto: false,
+        modelName: "qashqai",
+        modelYear: 2022,
+        plates: "34asd123",
+        seats: 5,
+        state: 2,
+    }   
+    
+    const dispatch = useDispatch()
 
-
-    const handleSubmit = async (data) => {
-        
-        try {
-            const productService = new ProductService();
-            await productService.postCarData(data);
-            toast.success('Araç eklenmiştir.');
-        } catch (error) {
-            if(error.response.data.message === 'Plate already exists.!')
-                toast.error('Plaka başka bir araçta kullanılmış!');
-            else
-                toast.error('Beklenmedik bir hata meydana geldi.');
-        }
+    
+    const handleSubmit =  (data) => {
+        dispatch(addCar(data)).then(response => {
+          if(response.payload=="Plate already exists.!"){
+            toast.error("Araç ekleme işlemi başarısız oldu. Plaka daha önce kullanılmış.");
+          }else if (response.error){
+            toast.error("Beklenmedik bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.")
+          } else {
+            toast.success("Araç başarıyla eklendi.")
+          }
+        });
     };
-
 
     return (
 
@@ -173,7 +175,6 @@ export default function CarAdd() {
                     <button
                         type="submit"
                         className="btn btn-primary"
-                        onSubmit={handleSubmit}
                     >
                     Ekle
                     </button>

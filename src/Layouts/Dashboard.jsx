@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Categories from './Categories'
 import CarList from '../Pages/CarList'
 import { MDBRow, MDBCol } from 'mdb-react-ui-kit';
@@ -26,8 +26,6 @@ export default function Dashboard() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/cars' element={<CarList />} />
-            <Route path='/confCars' element={<ConfortCarsList />} />
-            <Route path='/ecoCars' element={<EconomyCarsList />} />
             <Route path='/confortCars' element={<ConfortCarsList />} />
             <Route path='/economyCars' element={<EconomyCarsList />} />
             <Route path='/cars/:id' element={<CarDetail />} />

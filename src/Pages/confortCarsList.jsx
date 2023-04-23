@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   MDBBadge,
   MDBBtn,
@@ -10,17 +10,17 @@ import {
   MDBPaginationItem,
   MDBPaginationLink,
 } from "mdb-react-ui-kit";
-import ProductService from "../services/productService";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCars } from "../react/features/car/carSlice";
 
 export default function ConfortCarsList() {
-  const [confCars, setConfCars] = useState([]);
+  const dispatch  = useDispatch();
+
+  const {cars} = useSelector(state => state.cars)
 
   useEffect(() => {
-    let productService = new ProductService();
-    productService.getCars()
-      .then((result) => setConfCars(result.data))
-      .catch((error) => console.error(error));
+    dispatch(getAllCars())
   }, []);
 
   return (
@@ -38,39 +38,39 @@ export default function ConfortCarsList() {
             </tr>
           </MDBTableHead>
           <MDBTableBody>
-            {confCars?.filter((car) => car.dailyPrice > 2000)
-              .map((confCars) => (
-                <tr key={confCars.id}>
+            {cars?.data.filter((car) => car.dailyPrice > 2000)
+              .map((cars) => (
+                <tr key={cars.id}>
                   <td>
                     <div className="d-flex justify-content-center">
                       <div className="ms-3">
-                        <p className="fw-bold mb-1">{confCars.brandName}</p>
-                        <p className="text-muted mb-0">{confCars.modelName}</p>
+                        <p className="fw-bold mb-1">{cars.brandName}</p>
+                        <p className="text-muted mb-0">{cars.modelName}</p>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <p className="fw-normal mb-1">{confCars.enumVehicleType}</p>
+                    <p className="fw-normal mb-1">{cars.enumVehicleType}</p>
                     <p className="text-muted mb-0"></p>
                   </td>
                   <td>
                     <MDBBadge color="success" pill>
-                      {confCars.state}
+                      {cars.state}
                     </MDBBadge>
                   </td>
                   <td>
-                    <div className="fw-bold mb-1">{confCars.dailyPrice} ₺</div>
+                    <div className="fw-bold mb-1">{cars.dailyPrice} ₺</div>
                   </td>
                   <td>
                     <MDBBadge color="info" pill>
-                      {String(confCars.manuelAuto)}
+                      {String(cars.manuelAuto)}
                     </MDBBadge>
                   </td>
                   <td>
-                    <p className="fw-normal mb-1">{confCars.plates}</p>
+                    <p className="fw-normal mb-1">{cars.plates}</p>
                   </td>
                   <td>
-                    <Link to={`/cars/${confCars.id}`}>
+                    <Link to={`/cars/${cars.id}`}>
                       <MDBBtn color="link" rounded size="sm">
                         Detay
                       </MDBBtn>

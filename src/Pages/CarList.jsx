@@ -1,6 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import ProductService from "../services/productService";
+import { useEffect } from "react";
 import {
     MDBBadge,
     MDBBtn,
@@ -12,17 +11,18 @@ import {
     MDBPaginationLink,
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCars} from '../react/features/car/carSlice';
 
 export default function CarList() {
-    const [cars, setCars] = useState([]);
+    const dispatch  = useDispatch();
 
+    const {cars} = useSelector(state => state.cars)
+    console.log(cars)
     useEffect(() => {
-        let productService = new ProductService();
-        productService.getCars()
-          .then((result) => setCars(result.data))
-          .catch((error) => console.error(error));
-      }, []);
-
+        dispatch(getAllCars())
+    }, [])
+   
     return (
         <div className="mt-4">
             <nav aria-label="table">
@@ -38,7 +38,7 @@ export default function CarList() {
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                        {cars?.map((cars) => (
+                    {cars.data.map((cars) => (
                             <tr key={cars.id}>
                                 <td>
                                     <div className="d-flex justify-content-center">

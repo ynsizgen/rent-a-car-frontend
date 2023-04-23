@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import ProductService from '../services/productService';
 import {
   MDBCard,
   MDBCardHeader,
@@ -10,26 +9,30 @@ import {
   MDBBtn,
   MDBBadge
 } from 'mdb-react-ui-kit';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByIdCar } from '../react/features/car/carSlice';
 export default function CarDetail() {
   let { id } = useParams();
 
-  const [car, setCar] = useState({})
+  const dispatch = useDispatch();
 
+  const {car} = useSelector(state => state.cars)
+  console.log(car)
   useEffect(() => {
-    let productService = new ProductService();
-    productService.getCarDetail(id).then((result) => setCar(result.data))
-  }, [])
+    dispatch(getByIdCar(id))
+  }, [id])
 
   
   return (
     <div className='mt-4'>
       <MDBCard>
-        <MDBCardHeader>{car.plates}       <MDBBadge color="success" pill>
-          {car.state}
+        <MDBCardHeader>{car.data.plates}       
+        <MDBBadge color="success" pill>
+          {car.data.state}
         </MDBBadge></MDBCardHeader>
         <MDBCardBody>
-          <MDBCardTitle>{car.brandName}</MDBCardTitle>
-          <MDBCardText>{car.modelName}</MDBCardText>
+          <MDBCardTitle>{car.data.brandName}</MDBCardTitle>
+          <MDBCardText>{car.data.modelName}</MDBCardText>
 
           <MDBBtn href='#'>Go somewhere</MDBBtn>
         </MDBCardBody>
